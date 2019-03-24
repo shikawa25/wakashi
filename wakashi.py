@@ -64,7 +64,7 @@ async def sauce(ctx):
                                       chrome_options=chrome_options)
             url = "https://trace.moe/?url=" + message.attachments[0].url
             driver.get(url)
-            await asyncio.sleep(5)
+            await asyncio.sleep(7)
             content_element = driver.find_element_by_id("results")
             html = content_element.get_attribute("innerHTML")
             soup = BeautifulSoup(html, "html.parser")
