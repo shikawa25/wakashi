@@ -7,6 +7,7 @@ from selenium import webdriver
 from bs4 import BeautifulSoup
 from discord.ext import commands
 import asyncio
+from selenium.webdriver.chrome.options import Options
 
 from discord.ext import commands
 
