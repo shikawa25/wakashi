@@ -88,6 +88,40 @@ async def sauce(ctx):
             await ctx.send(embed=embed)
             return
 
+        regex = re.findall("(http.*\.[a-zA-Z]{3})", message.content)
+        if str(regex) != "[]":
+            chrome_options = Options()
+            chrome_options.binary_location = "/app/.apt/usr/bin/google-chrome"
+            chrome_options.add_argument('--disable-gpu')
+            chrome_options.add_argument('--no-sandbox')
+            driver = webdriver.Chrome(executable_path="/app/.chromedriver/bin/chromedriver",
+                                      chrome_options=chrome_options)
+            url = "https://trace.moe/?url=" + regex[-1]
+            driver.get(url)
+            await asyncio.sleep(7)
+            content_element = driver.find_element_by_id("results")
+            html = content_element.get_attribute("innerHTML")
+            soup = BeautifulSoup(html, "html.parser")
+            data = str(soup.find('li', attrs={'class': 'result active'}))
+            embed = discord.Embed(color=0xfac4c4)
+            title = re.findall('(?:data-title-romaji=\")(.*?)(?:\")', data)[0]
+            ep = re.findall('(?:class=\"ep\">EP#)(.*?)(?:</span>)', data)[0]
+            time = re.findall('(?:class=\"time\">)(.*?)(?:</span>)', data)[0]
+            id = re.findall('(?:data-anilist-id=\")(.*?)(?:\")', data)[0]
+            video = driver.find_element_by_class_name("noselect")
+            videohtml = video.get_attribute("innerHTML")
+            driver.close()
+            moar_soup = str(BeautifulSoup(videohtml, "html.parser"))
+            video_regex = re.findall('(?:\"player\" src=\")(.*?)(?:\")', moar_soup)[0].replace('amp;', '')
+            embed.add_field(name="Sauce",
+                            value="Anime: **" + title + "**\nEpisódio: **" + ep + "**\nTempo estimado: **" + time + "**")
+            embed.set_footer(text="https://anilist.co/anime/" + id)
+            await asyncio.sleep(2)
+            await ctx.send('https://trace.moe' + video_regex)
+            await asyncio.sleep(2)
+            await ctx.send(embed=embed)
+            return
+
 
 @bot.command()
 async def ping(ctx):
