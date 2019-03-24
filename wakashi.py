@@ -55,7 +55,7 @@ async def mocinha(ctx):
 async def sauce(ctx):
     if len(ctx.message.attachments) > 0:
         print(ctx.message.attachments[0].url)
-        driver = webdriver.Chrome(executable_path="chromedriver")
+        driver = webdriver.Chrome(executable_path="/app/.apt/usr/bin/google-chrome")
         url = "https://trace.moe/?url="+ctx.message.attachments[0].url
         driver.get(url)
         await asyncio.sleep(7)
