@@ -3,6 +3,10 @@ import json
 import random
 import re
 import requests
+from selenium import webdriver
+from bs4 import BeautifulSoup
+from discord.ext import commands
+import asyncio
 
 from discord.ext import commands
 
@@ -47,7 +51,21 @@ async def mocinha(ctx):
     else:
         await ctx.send('**vc não tem rola pra isso**')
 
-
+@bot.command()
+async def sauce(ctx):
+    if len(ctx.message.attachments) > 0:
+        print(ctx.message.attachments[0].url)
+        driver = webdriver.Chrome(executable_path="heroku/chromedriver")
+        url = "https://trace.moe/?url="+ctx.message.attachments[0].url
+        driver.get(url)
+        await asyncio.sleep(7)
+        content_element = driver.find_element_by_id("results")
+        html = content_element.get_attribute("innerHTML")
+        soup = BeautifulSoup(html, "html.parser")
+        data = soup.findAll('li', attrs={'class':'result active'})
+        await ctx.send(str(data))
+        print(data)
+        
 @bot.command()
 async def ping(ctx):
     await ctx.send('pong')
