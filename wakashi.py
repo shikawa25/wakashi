@@ -53,18 +53,22 @@ async def mocinha(ctx):
 
 @bot.command()
 async def sauce(ctx):
-    if len(ctx.message.attachments) > 0:
-        print(ctx.message.attachments[0].url)
-        driver = webdriver.Chrome(executable_path="/app/.apt/usr/bin/google-chrome")
-        url = "https://trace.moe/?url="+ctx.message.attachments[0].url
-        driver.get(url)
-        await asyncio.sleep(7)
-        content_element = driver.find_element_by_id("results")
-        html = content_element.get_attribute("innerHTML")
-        soup = BeautifulSoup(html, "html.parser")
-        data = soup.findAll('li', attrs={'class':'result active'})
-        await ctx.send(str(data))
-        print(data)
+	if len(ctx.message.attachments) > 0:
+		print(ctx.message.attachments[0].url)
+    chrome_options = Options()
+		chrome_options.binary_location = GOOGLE_CHROME_BIN
+		chrome_options.add_argument('--disable-gpu')
+		chrome_options.add_argument('--no-sandbox')
+		driver = webdriver.Chrome(executable_path=CHROMEDRIVER_PATH, chrome_options=chrome_options)
+		url = "https://trace.moe/?url="+ctx.message.attachments[0].url
+		driver.get(url)
+		await asyncio.sleep(7)
+		content_element = driver.find_element_by_id("results")
+		html = content_element.get_attribute("innerHTML")
+		soup = BeautifulSoup(html, "html.parser")
+		data = soup.findAll('li', attrs={'class':'result active'})
+		await ctx.send(str(data))
+		print(data)
         
 @bot.command()
 async def ping(ctx):
