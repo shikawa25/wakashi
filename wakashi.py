@@ -68,23 +68,24 @@ async def sauce(ctx):
             content_element = driver.find_element_by_id("results")
             html = content_element.get_attribute("innerHTML")
             soup = BeautifulSoup(html, "html.parser")
+            driver.close()
             data = str(soup.find('li', attrs={'class': 'result'}))
             embed = discord.Embed(color=0xfac4c4)
             title = re.findall('(?:data-title-romaji=\")(.*?)(?:\")', data)[0]
             ep = re.findall('(?:class=\"ep\">EP#)(.*?)(?:</span>)', data)[0]
             time = re.findall('(?:class=\"time\">)(.*?)(?:</span>)', data)[0]
             id = re.findall('(?:data-anilist-id=\")(.*?)(?:\")', data)[0]
-            video = driver.find_element_by_class_name("noselect")
-            videohtml = video.get_attribute("innerHTML")
-            driver.close()
-            moar_soup = str(BeautifulSoup(videohtml, "html.parser"))
-            video_regex = re.findall('(?:\"player\" src=\")(.*?)(?:\")', moar_soup)[0].replace('amp;', '')
+            file_title = re.findall('(?:data-title=\")(.*?)(?:\")', data)[0].replace(' ', '%20')
+            data_start = re.findall('(?:data-start=\")(.*?)(?:\")', data)[0]
+            data_end = re.findall('(?:data-end=\")(.*?)(?:\")', data)[0]
+            data_token = re.findall('(?:data-token=\")(.*?)(?:\")', data)[0]
+            video = 'https://trace.moe/'+id+'/'+ file_title + '?start=' + data_start + '&end=' + data_end + '&token=' + data_token
             embed.add_field(name="Sauce",
                             value="Anime: **" + title + "**\nEpisódio: **" + ep + "**\nTempo estimado: **" + time + "**")
             embed.set_footer(text="https://anilist.co/anime/" + id)
             await asyncio.sleep(2)
-            await ctx.send('https://trace.moe' + video_regex)
-            await asyncio.sleep(2)
+            await ctx.send(video)
+            await asyncio.sleep(4)
             await ctx.send(embed=embed)
             return
 
@@ -101,6 +102,7 @@ async def sauce(ctx):
             await asyncio.sleep(7)
             content_element = driver.find_element_by_id("results")
             html = content_element.get_attribute("innerHTML")
+            driver.close()
             soup = BeautifulSoup(html, "html.parser")
             data = str(soup.find('li', attrs={'class': 'result'}))
             embed = discord.Embed(color=0xfac4c4)
@@ -108,17 +110,17 @@ async def sauce(ctx):
             ep = re.findall('(?:class=\"ep\">EP#)(.*?)(?:</span>)', data)[0]
             time = re.findall('(?:class=\"time\">)(.*?)(?:</span>)', data)[0]
             id = re.findall('(?:data-anilist-id=\")(.*?)(?:\")', data)[0]
-            video = driver.find_element_by_class_name("noselect")
-            videohtml = video.get_attribute("innerHTML")
-            driver.close()
-            moar_soup = str(BeautifulSoup(videohtml, "html.parser"))
-            video_regex = re.findall('(?:\"player\" src=\")(.*?)(?:\")', moar_soup)[0].replace('amp;', '')
+            file_title = re.findall('(?:data-title=\")(.*?)(?:\")', data)[0].replace(' ', '%20')
+            data_start = re.findall('(?:data-start=\")(.*?)(?:\")', data)[0]
+            data_end = re.findall('(?:data-end=\")(.*?)(?:\")', data)[0]
+            data_token = re.findall('(?:data-token=\")(.*?)(?:\")', data)[0]
+            video = 'https://trace.moe/' + id + '/' + file_title + '?start=' + data_start + '&end=' + data_end + '&token=' + data_token
             embed.add_field(name="Sauce",
                             value="Anime: **" + title + "**\nEpisódio: **" + ep + "**\nTempo estimado: **" + time + "**")
             embed.set_footer(text="https://anilist.co/anime/" + id)
             await asyncio.sleep(2)
-            await ctx.send('https://trace.moe' + video_regex)
-            await asyncio.sleep(2)
+            await ctx.send(video)
+            await asyncio.sleep(4)
             await ctx.send(embed=embed)
             return
 
