@@ -83,9 +83,9 @@ async def sauce(ctx):
             embed.add_field(name="Sauce",
                             value="Anime: **" + title + "**\nEpisódio: **" + ep + "**\nTempo estimado: **" + time + "**")
             embed.set_footer(text="https://anilist.co/anime/" + id)
-            await asyncio.sleep(2)
+            await asyncio.sleep(1)
             await ctx.send(video)
-            await asyncio.sleep(4)
+            await asyncio.sleep(6)
             await ctx.send(embed=embed)
             return
 
@@ -118,9 +118,9 @@ async def sauce(ctx):
             embed.add_field(name="Sauce",
                             value="Anime: **" + title + "**\nEpisódio: **" + ep + "**\nTempo estimado: **" + time + "**")
             embed.set_footer(text="https://anilist.co/anime/" + id)
-            await asyncio.sleep(2)
+            await asyncio.sleep(1)
             await ctx.send(video)
-            await asyncio.sleep(4)
+            await asyncio.sleep(6)
             await ctx.send(embed=embed)
             return
 
