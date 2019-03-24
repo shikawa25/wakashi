@@ -55,7 +55,7 @@ async def mocinha(ctx):
 async def sauce(ctx):
     if len(ctx.message.attachments) > 0:
         print(ctx.message.attachments[0].url)
-        driver = webdriver.Chrome(executable_path="heroku/chromedriver")
+        driver = webdriver.Chrome(executable_path="chromedriver")
         url = "https://trace.moe/?url="+ctx.message.attachments[0].url
         driver.get(url)
         await asyncio.sleep(7)
@@ -71,4 +71,4 @@ async def ping(ctx):
     await ctx.send('pong')
 
 
-bot.run('xxx')
+bot.run('Mzc1NDIwMDYwNjYxMDU1NDkw.D3YDvA.j9KR9aO3lGsHTdmvF44vCGBGhCs')
