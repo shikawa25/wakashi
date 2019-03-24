@@ -57,7 +57,7 @@ async def sauce(ctx):
 	if len(ctx.message.attachments) > 0:
 		print(ctx.message.attachments[0].url)
 		chrome_options = Options()
-		chrome_options.binary_location = "GOOGLE_CHROME_BIN"
+		chrome_options.binary_location = "/app/.apt/usr/bin/google-chrome"
 		chrome_options.add_argument('--disable-gpu')
 		chrome_options.add_argument('--no-sandbox')
 		driver = webdriver.Chrome(executable_path="/app/.chromedriver/bin/chromedriver", chrome_options=chrome_options)
