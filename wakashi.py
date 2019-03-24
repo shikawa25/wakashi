@@ -68,7 +68,7 @@ async def sauce(ctx):
             content_element = driver.find_element_by_id("results")
             html = content_element.get_attribute("innerHTML")
             soup = BeautifulSoup(html, "html.parser")
-            data = str(soup.find('li', attrs={'class': 'result active'}))
+            data = str(soup.find('li', attrs={'class': 'result'}))
             embed = discord.Embed(color=0xfac4c4)
             title = re.findall('(?:data-title-romaji=\")(.*?)(?:\")', data)[0]
             ep = re.findall('(?:class=\"ep\">EP#)(.*?)(?:</span>)', data)[0]
@@ -102,7 +102,7 @@ async def sauce(ctx):
             content_element = driver.find_element_by_id("results")
             html = content_element.get_attribute("innerHTML")
             soup = BeautifulSoup(html, "html.parser")
-            data = str(soup.find('li', attrs={'class': 'result active'}))
+            data = str(soup.find('li', attrs={'class': 'result'}))
             embed = discord.Embed(color=0xfac4c4)
             title = re.findall('(?:data-title-romaji=\")(.*?)(?:\")', data)[0]
             ep = re.findall('(?:class=\"ep\">EP#)(.*?)(?:</span>)', data)[0]
