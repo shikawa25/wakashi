@@ -9,6 +9,7 @@ from discord.ext import commands
 import asyncio
 from selenium.webdriver.chrome.options import Options
 from discord.ext import commands
+import urllib.parse
 
 bot = commands.Bot(command_prefix='~', command_not_found='O comando {} não existe.',
                    command_has_no_subcommands='O subcomando {} não existe.', case_insensitive=True,
@@ -75,7 +76,7 @@ async def sauce(ctx):
             ep = re.findall('(?:class=\"ep\">EP#)(.*?)(?:</span>)', data)[0]
             time = re.findall('(?:class=\"time\">)(.*?)(?:</span>)', data)[0]
             id = re.findall('(?:data-anilist-id=\")(.*?)(?:\")', data)[0]
-            file_title = re.findall('(?:data-title=\")(.*?)(?:\")', data)[0].encode('cp932')
+            file_title = urllib.parse.quote(re.findall('(?:data-title=\")(.*?)(?:\")', data)[0])
             data_start = re.findall('(?:data-start=\")(.*?)(?:\")', data)[0]
             data_end = re.findall('(?:data-end=\")(.*?)(?:\")', data)[0]
             data_token = re.findall('(?:data-token=\")(.*?)(?:\")', data)[0]
@@ -110,7 +111,7 @@ async def sauce(ctx):
             ep = re.findall('(?:class=\"ep\">EP#)(.*?)(?:</span>)', data)[0]
             time = re.findall('(?:class=\"time\">)(.*?)(?:</span>)', data)[0]
             id = re.findall('(?:data-anilist-id=\")(.*?)(?:\")', data)[0]
-            file_title = re.findall('(?:data-title=\")(.*?)(?:\")', data)[0].encode('cp932')
+            file_title = urllib.parse.quote(re.findall('(?:data-title=\")(.*?)(?:\")', data)[0])
             data_start = re.findall('(?:data-start=\")(.*?)(?:\")', data)[0]
             data_end = re.findall('(?:data-end=\")(.*?)(?:\")', data)[0]
             data_token = re.findall('(?:data-token=\")(.*?)(?:\")', data)[0]
