@@ -8,7 +8,6 @@ from bs4 import BeautifulSoup
 from discord.ext import commands
 import asyncio
 from selenium.webdriver.chrome.options import Options
-
 from discord.ext import commands
 
 bot = commands.Bot(command_prefix='~', command_not_found='O comando {} não existe.',
@@ -52,25 +51,44 @@ async def mocinha(ctx):
     else:
         await ctx.send('**vc não tem rola pra isso**')
 
+
 @bot.command()
 async def sauce(ctx):
-	if len(ctx.message.attachments) > 0:
-		print(ctx.message.attachments[0].url)
-		chrome_options = Options()
-		chrome_options.binary_location = "/app/.apt/usr/bin/google-chrome"
-		chrome_options.add_argument('--disable-gpu')
-		chrome_options.add_argument('--no-sandbox')
-		driver = webdriver.Chrome(executable_path="/app/.chromedriver/bin/chromedriver", chrome_options=chrome_options)
-		url = "https://trace.moe/?url="+ctx.message.attachments[0].url
-		driver.get(url)
-		await asyncio.sleep(7)
-		content_element = driver.find_element_by_id("results")
-		html = content_element.get_attribute("innerHTML")
-		soup = BeautifulSoup(html, "html.parser")
-		data = soup.findAll('li', attrs={'class':'result active'})
-		await ctx.send(str(data))
-		print(data)
-        
+    async for message in ctx.channel.history(limit=20):
+        if len(message.attachments) > 0:
+            chrome_options = Options()
+            chrome_options.binary_location = "/app/.apt/usr/bin/google-chrome"
+            chrome_options.add_argument('--disable-gpu')
+            chrome_options.add_argument('--no-sandbox')
+            driver = webdriver.Chrome(executable_path="/app/.chromedriver/bin/chromedriver",
+                                      chrome_options=chrome_options)
+            url = "https://trace.moe/?url=" + message.attachments[0].url
+            driver.get(url)
+            await asyncio.sleep(5)
+            content_element = driver.find_element_by_id("results")
+            html = content_element.get_attribute("innerHTML")
+            soup = BeautifulSoup(html, "html.parser")
+            data = str(soup.find('li', attrs={'class': 'result active'}))
+            embed = discord.Embed(color=0xfac4c4)
+            title = re.findall('(?:data-title-romaji=\")(.*?)(?:\")', data)[0]
+            ep = re.findall('(?:class=\"ep\">EP#)(.*?)(?:</span>)', data)[0]
+            time = re.findall('(?:class=\"time\">)(.*?)(?:</span>)', data)[0]
+            id = re.findall('(?:data-anilist-id=\")(.*?)(?:\")', data)[0]
+            video = driver.find_element_by_class_name("noselect")
+            videohtml = video.get_attribute("innerHTML")
+            driver.close()
+            moar_soup = str(BeautifulSoup(videohtml, "html.parser"))
+            video_regex = re.findall('(?:\"player\" src=\")(.*?)(?:\")', moar_soup)[0].replace('amp;', '')
+            embed.add_field(name="Sauce",
+                            value="Anime: **" + title + "**\nEpisódio: **" + ep + "**\nTempo estimado: **" + time + "**")
+            embed.set_footer(text="https://anilist.co/anime/" + id)
+            await asyncio.sleep(2)
+            await ctx.send('https://trace.moe' + video_regex)
+            await asyncio.sleep(2)
+            await ctx.send(embed=embed)
+            return
+
+
 @bot.command()
 async def ping(ctx):
     await ctx.send('pong')
