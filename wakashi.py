@@ -75,7 +75,7 @@ async def sauce(ctx):
             ep = re.findall('(?:class=\"ep\">EP#)(.*?)(?:</span>)', data)[0]
             time = re.findall('(?:class=\"time\">)(.*?)(?:</span>)', data)[0]
             id = re.findall('(?:data-anilist-id=\")(.*?)(?:\")', data)[0]
-            file_title = re.findall('(?:data-title=\")(.*?)(?:\")', data)[0].encode('Shift_JIS')
+            file_title = re.findall('(?:data-title=\")(.*?)(?:\")', data)[0].encode('cp932')
             data_start = re.findall('(?:data-start=\")(.*?)(?:\")', data)[0]
             data_end = re.findall('(?:data-end=\")(.*?)(?:\")', data)[0]
             data_token = re.findall('(?:data-token=\")(.*?)(?:\")', data)[0]
@@ -110,7 +110,7 @@ async def sauce(ctx):
             ep = re.findall('(?:class=\"ep\">EP#)(.*?)(?:</span>)', data)[0]
             time = re.findall('(?:class=\"time\">)(.*?)(?:</span>)', data)[0]
             id = re.findall('(?:data-anilist-id=\")(.*?)(?:\")', data)[0]
-            file_title = re.findall('(?:data-title=\")(.*?)(?:\")', data)[0].encode('Shift_JIS')
+            file_title = re.findall('(?:data-title=\")(.*?)(?:\")', data)[0].encode('cp932')
             data_start = re.findall('(?:data-start=\")(.*?)(?:\")', data)[0]
             data_end = re.findall('(?:data-end=\")(.*?)(?:\")', data)[0]
             data_token = re.findall('(?:data-token=\")(.*?)(?:\")', data)[0]
