@@ -112,6 +112,7 @@ async def sauce(ctx):
             time = re.findall('(?:class=\"time\">)(.*?)(?:</span>)', data)[0]
             id = re.findall('(?:data-anilist-id=\")(.*?)(?:\")', data)[0]
             file_title = urllib.parse.quote(re.findall('(?:data-title=\")(.*?)(?:\")', data)[0])
+            print(file_title)
             data_start = re.findall('(?:data-start=\")(.*?)(?:\")', data)[0]
             data_end = re.findall('(?:data-end=\")(.*?)(?:\")', data)[0]
             data_token = re.findall('(?:data-token=\")(.*?)(?:\")', data)[0]
