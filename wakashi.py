@@ -108,6 +108,7 @@ async def sauce(ctx):
             data = str(soup.find('li', attrs={'class': 'result'}))
             embed = discord.Embed(color=0xfac4c4)
             title = re.findall('(?:data-title-romaji=\")(.*?)(?:\")', data)[0]
+            print(title)
             ep = re.findall('(?:class=\"ep\">EP#)(.*?)(?:</span>)', data)[0]
             time = re.findall('(?:class=\"time\">)(.*?)(?:</span>)', data)[0]
             id = re.findall('(?:data-anilist-id=\")(.*?)(?:\")', data)[0]
