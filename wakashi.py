@@ -72,11 +72,11 @@ async def sauce(ctx):
             driver.close()
             data = str(soup.find('li', attrs={'class': 'result'}))
             embed = discord.Embed(color=0xfac4c4)
-            title = re.findall('(?:data-title-romaji=\")(.*?)(?:\")', data)[0]
+            title = re.findall('(?:data-title-romaji=\")(.*?)(?:\")', data)[0].replace("amp;", "")
             ep = re.findall('(?:class=\"ep\">EP#)(.*?)(?:</span>)', data)[0]
             time = re.findall('(?:class=\"time\">)(.*?)(?:</span>)', data)[0]
             id = re.findall('(?:data-anilist-id=\")(.*?)(?:\")', data)[0]
-            file_title = urllib.parse.quote(re.findall('(?:data-title=\")(.*?)(?:\")', data)[0])
+            file_title = urllib.parse.quote(re.findall('(?:data-title=\")(.*?)(?:\")', data)[0]).replace("amp%3B", "")
             data_start = re.findall('(?:data-start=\")(.*?)(?:\")', data)[0]
             data_end = re.findall('(?:data-end=\")(.*?)(?:\")', data)[0]
             data_token = re.findall('(?:data-token=\")(.*?)(?:\")', data)[0]
@@ -107,13 +107,11 @@ async def sauce(ctx):
             soup = BeautifulSoup(html, "html.parser")
             data = str(soup.find('li', attrs={'class': 'result'}))
             embed = discord.Embed(color=0xfac4c4)
-            title = re.findall('(?:data-title-romaji=\")(.*?)(?:\")', data)[0]
-            print(title)
+            title = re.findall('(?:data-title-romaji=\")(.*?)(?:\")', data)[0].replace("amp;", "")
             ep = re.findall('(?:class=\"ep\">EP#)(.*?)(?:</span>)', data)[0]
             time = re.findall('(?:class=\"time\">)(.*?)(?:</span>)', data)[0]
             id = re.findall('(?:data-anilist-id=\")(.*?)(?:\")', data)[0]
-            file_title = urllib.parse.quote(re.findall('(?:data-title=\")(.*?)(?:\")', data)[0])
-            print(file_title)
+            file_title = urllib.parse.quote(re.findall('(?:data-title=\")(.*?)(?:\")', data)[0]).replace("amp%3B", "")
             data_start = re.findall('(?:data-start=\")(.*?)(?:\")', data)[0]
             data_end = re.findall('(?:data-end=\")(.*?)(?:\")', data)[0]
             data_token = re.findall('(?:data-token=\")(.*?)(?:\")', data)[0]
