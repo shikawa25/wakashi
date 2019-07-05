@@ -104,7 +104,8 @@ async def sauce(ctx):
             chrome_options.add_argument('--no-sandbox')
             driver = webdriver.Chrome(executable_path="/app/.chromedriver/bin/chromedriver",
                                       chrome_options=chrome_options)
-            url = "https://trace.moe/?url=" + regex[-1]
+            discord2imgur = upload = client.upload_from_url(regex[-1], config=None, anon=True)
+            url = "https://trace.moe/?url=" + discord2imgur['link']
             driver.get(url)
             await asyncio.sleep(7)
             content_element = driver.find_element_by_id("results")
