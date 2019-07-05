@@ -138,4 +138,4 @@ async def ping(ctx):
     await ctx.send('pong')
 
 
-bot.run('Mzc1NDIwMDYwNjYxMDU1NDkw.XR_dYA.61qtixHiVHsmRnPTddFyBR2TNAw')
+bot.run('xxx')
