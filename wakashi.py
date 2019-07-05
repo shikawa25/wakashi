@@ -10,6 +10,7 @@ import asyncio
 from selenium.webdriver.chrome.options import Options
 from discord.ext import commands
 import urllib.parse
+from imgurpython import ImgurClient
 
 bot = commands.Bot(command_prefix='~', command_not_found='O comando {} não existe.',
                    command_has_no_subcommands='O subcomando {} não existe.', case_insensitive=True,
@@ -18,6 +19,10 @@ bot = commands.Bot(command_prefix='~', command_not_found='O comando {} não exis
 r = requests.get("https://raw.githubusercontent.com/shikawa25/wakashi/master/weeb_nomes.json")
 nomes = json.loads(r.text)
 
+client_id = '9b176065a8161b9'
+client_secret = '3b9e31be7a2cae28bfe9f93006c67a879b95a43e'
+
+client = ImgurClient(client_id, client_secret)
 
 @bot.event
 async def on_ready():
@@ -63,7 +68,8 @@ async def sauce(ctx):
             chrome_options.add_argument('--no-sandbox')
             driver = webdriver.Chrome(executable_path="/app/.chromedriver/bin/chromedriver",
                                       chrome_options=chrome_options)
-            url = "https://trace.moe/?url=" + message.attachments[0].url
+            discord2imgur = upload = client.upload_from_url(message.attachments[0].url, config=None, anon=True)
+            url = "https://trace.moe/?url=" + discord2imgur['link']
             driver.get(url)
             await asyncio.sleep(7)
             content_element = driver.find_element_by_id("results")
